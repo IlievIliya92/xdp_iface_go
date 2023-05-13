@@ -1,2 +1,4 @@
 # xdp_iface_go
-XDP Iface GO bindings
+
+GO bindings for [xdp_iface](https://github.com/IlievIliya92/xdp_iface).
+
