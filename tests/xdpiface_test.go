@@ -4,10 +4,12 @@ import (
 	"testing"
 	"bytes"
 	"fmt"
+
+	"github.com/IlievIliya92/xdp_iface_go/pkg"
 )
 
 func TestXdpIface(t *testing.T) {
-	xdp_iface, err := XdpIfaceNew(XDP_IFACE_DEFAULT)
+	xdp_iface, err := xdpiface.XdpIfaceNew(xdpiface.XDP_IFACE_DEFAULT)
 	if err != nil {
 		t.Errorf("Failed to create XDP iface")
 	}
@@ -24,26 +26,26 @@ func TestXdpSock(t *testing.T) {
 	var iBufferSize int = 0
 	iBuffer := make([]byte, 9000)
 
-	XdpLogLevelSet(XDP_LOG_INFO)
+	xdpiface.XdpLogLevelSet(xdpiface.XDP_LOG_INFO)
 
-	xdp_iface, err := XdpIfaceNew(XDP_IFACE_DEFAULT)
+	xdp_iface, err := xdpiface.XdpIfaceNew(xdpiface.XDP_IFACE_DEFAULT)
 	if err != nil {
 		t.Errorf("Failed to create XDP iface")
 	}
 	defer xdp_iface.Destroy()
 
-	xdp_iface.LoadProgram(XDP_IFACE_XDP_PROG_DEFAULT)
+	xdp_iface.LoadProgram(xdpiface.XDP_IFACE_XDP_PROG_DEFAULT)
 
-	xdp_sock, err := XdpSockNew(xdp_iface)
+	xdp_sock, err := xdpiface.XdpSockNew(xdp_iface)
 	if err != nil {
 		t.Errorf("Failed to create XDP sock")
 	}
 	defer xdp_sock.Destroy()
-	xdp_sock.LoopUpBpfMap(xdp_iface, XDP_SOCK_XSKS_MAP_DEFAULT, 4, 4)
+	xdp_sock.LoopUpBpfMap(xdp_iface, xdpiface.XDP_SOCK_XSKS_MAP_DEFAULT, 4, 4)
 
-    xdp_sock.SetSockopt(SO_PREFER_BUSY_POLL, 1)
-    xdp_sock.SetSockopt(SO_BUSY_POLL, 20)
-    xdp_sock.SetSockopt(SO_BUSY_POLL_BUDGET, int(batch_size))
+    xdp_sock.SetSockopt(xdpiface.SO_PREFER_BUSY_POLL, 1)
+    xdp_sock.SetSockopt(xdpiface.SO_BUSY_POLL, 20)
+    xdp_sock.SetSockopt(xdpiface.SO_BUSY_POLL_BUDGET, int(batch_size))
 
     xdp_sock.TxBatchSetSize(batch_size);
   	for i := 1; i <= int(batch_size); i++ {
