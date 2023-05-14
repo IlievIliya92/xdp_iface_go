@@ -29,7 +29,7 @@ func main () {
 	iBuffer := make([]byte, 9000)
 
 	xdpiface.XdpLogLevelSet(xdpiface.XDP_LOG_INFO)
-	xdp_iface, err := xdpiface.XdpIfaceNew(*net_iface)
+	xdp_iface, err := xdpiface.NewXdpIface(*net_iface)
 	if err != nil {
 		fmt.Println("Failed to create XDP iface", err)
 	}
@@ -38,7 +38,7 @@ func main () {
 	xdp_iface.LoadProgram(xdpiface.XDP_IFACE_XDP_PROG_DEFAULT)
 	defer xdp_iface.UnloadProgram()
 
-	xdp_sock, err := xdpiface.XdpSockNew(xdp_iface)
+	xdp_sock, err := xdpiface.NewXdpSock(xdp_iface)
 	if err != nil {
 		fmt.Println("Failed to create XDP sock", err)
 	}

@@ -32,7 +32,7 @@ type XdpIface struct {
 	ctx *C.xdp_iface_t
 }
 
-func XdpIfaceNew (xdpInterface string) (*XdpIface, error) {
+func NewXdpIface (xdpInterface string) (*XdpIface, error) {
 	self := new(XdpIface)
 	xdpInterfaceCstr := C.CString(xdpInterface)
 	defer C.free(unsafe.Pointer(xdpInterfaceCstr))
@@ -76,7 +76,7 @@ const (
 	SO_BUSY_POLL_BUDGET = C.XDP_SOCK_SO_BUSY_POLL_BUDGET
 )
 
-func XdpSockNew (xdpInterface *XdpIface) (*XdpSock, error) {
+func NewXdpSock (xdpInterface *XdpIface) (*XdpSock, error) {
 	self := new(XdpSock)
 	self.ctx = C.xdp_sock_new(xdpInterface.ctx)
 	if self.ctx == nil {

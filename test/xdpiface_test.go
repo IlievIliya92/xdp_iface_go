@@ -9,7 +9,7 @@ import (
 )
 
 func TestXdpIface(t *testing.T) {
-	xdp_iface, err := xdpiface.XdpIfaceNew(xdpiface.XDP_IFACE_DEFAULT)
+	xdp_iface, err := xdpiface.NewXdpIface(xdpiface.XDP_IFACE_DEFAULT)
 	if err != nil {
 		t.Errorf("Failed to create XDP iface")
 	}
@@ -28,7 +28,7 @@ func TestXdpSock(t *testing.T) {
 
 	xdpiface.XdpLogLevelSet(xdpiface.XDP_LOG_INFO)
 
-	xdp_iface, err := xdpiface.XdpIfaceNew(xdpiface.XDP_IFACE_DEFAULT)
+	xdp_iface, err := xdpiface.NewXdpIface(xdpiface.XDP_IFACE_DEFAULT)
 	if err != nil {
 		t.Errorf("Failed to create XDP iface")
 	}
@@ -36,7 +36,7 @@ func TestXdpSock(t *testing.T) {
 
 	xdp_iface.LoadProgram(xdpiface.XDP_IFACE_XDP_PROG_DEFAULT)
 
-	xdp_sock, err := xdpiface.XdpSockNew(xdp_iface)
+	xdp_sock, err := xdpiface.NewXdpSock(xdp_iface)
 	if err != nil {
 		t.Errorf("Failed to create XDP sock")
 	}
